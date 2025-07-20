@@ -1,0 +1,32 @@
+spring:
+  kafka:
+    # Adresse du broker Kafka, accessible depuis la machine hôte (localhost)
+    bootstrap-servers: localhost:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    consumer:
+      # ID de groupe pour les consommateurs, important pour Kafka
+      group-id: click-counter-group
+      # Permet au consommateur de lire les messages depuis le début si aucun offset sauvegardé
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+    streams:
+      # ID unique et obligatoire pour l'application Kafka Streams
+      application-id: click-counter-streams-app
+
+# Configuration des noms de topics utilisés dans l'application
+click:
+  topic:
+    # Topic pour les événements de clic bruts (producteur)
+    name: clicks
+    # Topic pour les comptes de clics agrégés (Kafka Streams & consommateur)
+    counts: click-counts
+
+# Port du serveur web
+server:
+  port: 9090
